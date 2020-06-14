@@ -16,7 +16,7 @@ class Questionnaire extends Model
 
     public function publicPath()
     {
-        return url('/surveys/'.$this->id.'-'.Str::slug($this->title));    
+        return url('/surveys/'.$this->id);    
     }
 
     public function user()

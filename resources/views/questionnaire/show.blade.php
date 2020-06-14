@@ -11,7 +11,7 @@
                     {{ $questionnaire->purpose }}
                     <div>
                         <a href="/questionnaires/{{ $questionnaire->id }}/questions/create" class="btn btn-dark">Add new question</a>
-                        <a href="/surveys/{{ $questionnaire->id }}-{{ Str::slug($questionnaire->title) }}" class="btn btn-dark">Take Survey</a>
+                        <a href="/surveys/{{ $questionnaire->id }}" class="btn btn-dark">Take Survey</a>
                     </div>
                 </div>
                 
