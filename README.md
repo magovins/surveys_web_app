@@ -1,4 +1,4 @@
-**[Demo](https://mysterious-depths-85175.herokuapp.com/)**
+Demo: https://mysterious-depths-85175.herokuapp.com/
 
 
 
