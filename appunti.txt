@@ -1,0 +1,139 @@
+ciclo for con controllo:
+
+	@forelse ()
+		...
+	@empty
+		...
+	@endforelse
+
+
+naming convention:
+	
+	Model -> singular
+	 es: Service
+	 rappresenta la singola riga della tabella
+	
+	Table -> plural
+	 es: services
+	 rappresenta la tabella (che contiene tutti i modelli)
+
+Migration:
+	
+	è uno script per eseguire delle operazioni sul database 
+	come per esempio creare la tabella
+
+	controllare che l'id sia di tipo bigIncrements('id');
+
+Model:
+	
+	nei controller se devo utilizzare il Model, devo importarlo
+	con il comando "use App\modelName;" all'inizio del file controller
+
+	
+	ModelName::create($data)
+		ritorna l'oggetto appena creato, quindi posso scriverlo così senza salvare in una variabile oppure se lo salvo avrò il modello appena creato fresco nella var
+		es: $newCustomer = Customer::create($data);
+		posso accedere ai campi di newCustomer subito dopo
+	ModelName::all() 
+		data però deve essere validate([]);
+	ModelName::findOrFail($paramName)
+		meglio questo che ::find()
+
+	Quando creo un model devo aggiungere l'opzione -m (migration) così mi risparmio di creare lo script per la creazionde della tabella
+
+Form (POST):
+
+	nelle form bisogna aggiungere sempre "@csrf" per motivi di sicurezza
+	Il token creato dal server e mandato alla form, quando riceverà
+	il post deve controllare che sia lo stesso token così nessun'altro
+	può mandarci la sua form 
+
+	se ci sono degli errori (campi non validi) per salvare i dati inseriti e non dover rimetterli da capo: esiste l'attributo nei tag che si chiama "value" (di solito nei tag input) ai quali si può attribuire il valore ="{{old('nomeDelCampoDaReqValidate')}}" 
+
+Request Validation:
+
+	request()->validation([
+		'name'=>'required|min:5|max:20'
+	]);
+
+	a questa ricorda di aggiungere nel file html l'errore relativo
+		@error('names')
+
+Naming convention:
+
+	in un form se ho dei campi che andranno salvati in un db,
+	conviene mettere gli stessi nomi sia nei campi che nelle colonne
+	del db
+
+	vale anche per i controller e i relativi route (VERB-URI-ACTION-ROUTE_NAME)
+
+Mass assignment:
+
+	https://stackoverflow.com/questions/22279435/what-does-mass-assignment-mean-in-laravel
+
+	filling a row with more than 1 column using an array of data.
+	
+	protected $fillable = ['name','col2',...]
+		columns that are allowed to be inserted
+	
+	protected $guarded = ['id']
+		the model can't insert that column
+		se lascio vuoto significa che tutti i campi possono essere modificati
+
+Route Model Binding:
+
+	il wildcard del routing e il nome del parametro dello stesso route devono avere lo stesso nome:
+	.../route/{param}', 'ModelController@show'
+	...function show(ModelName $param){...}
+	e gestisce anche il not found (è come findOrFail)
+
+	così mi risparmio il codice per andare a cercare nel db il model che ha quel param 
+	( $result = ModelName::findOrFail($param) )
+
+Cerca differenza PUT/PATCH -> resource controller
+
+Model::where('attributo', 'valore')->get()/first();
+	
+	fare attenzione perchè get mi torna una collezione (array),
+	first invece mi torna uno solo record
+
+App:
+	
+	è un container, un mega array in realtà che contiene tante cose utili tra cui Service container che contiene la funzione request(). Dal codice posso chiamare semplicemente la funzione helper request() ma c'è anche la classe Illuminate\Http\Request dalla quale posso istanziare un oggetto Request $request;
+
+	$request->query('paramName')->get();
+	uri: /customers?paramName=value
+
+	$request->query('paramName', defaultValue)->get();
+	defaultValue: il valore che assume se nel caso non fosse specificata la query nella URI
+	
+User:
+	
+	take the current authenticated user: auth()->user()->id;
+
+FOR in PHP:
+
+	@foreach($questionnaire->questions as $key => $question)
+		se mi serve anche l'indice
+
+Tap():
+	
+	tap(new App\Link($data))->save();
+	we use the tap() helper function to create a new Link model instance and then save it. Using tap allows us to call save() and still return the model instance after the save
+________________________________________________________________________
+
+
+composer require laravel/ui
+create db
+setup db .env file
+php artisan migrate
+php artisan migrate:fresh (se ho fatto delle modifiche alla tabella/e)
+
+php artisan make:model NOME -m 
+	-m sta per migrate 
+
+disable mass assignment
+	protected $guarded = [];
+
+php artisan make:controller NomeAlSingolareController
+
