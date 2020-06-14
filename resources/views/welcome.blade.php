@@ -81,7 +81,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Survey App
+                    Survey Web App
                 </div>
 
                 <div class="links">
