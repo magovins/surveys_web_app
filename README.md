@@ -10,5 +10,4 @@ Login with: <br>
 
 - API REST
 - CRUD
-- Login
 - SQL
