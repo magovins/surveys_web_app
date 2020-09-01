@@ -11,4 +11,3 @@ Login with: <br>
 - API REST
 - CRUD
 - SQL
->>>>>>> d276095d78803fbcb6b51bb7c0ee59a2c8f04b6b
